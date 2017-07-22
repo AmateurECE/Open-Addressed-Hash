@@ -79,8 +79,16 @@
 <p>This program can be downloaded from git using the normal routine, and built
   using the standard autotools procedure:
   <code>
-    ./configure && make && make install
+    <br>./configure && make && make install
   </code>
-  Don't forget to use <code>sudo</code> if you do not have administrative
+  <br>Don't forget to use <code>sudo</code> if you do not have administrative
   privileges!</p>
 
+<p>Sources:
+  <cite>CodeCogs Equation Editor</cite>
+  <a href="http://www.homeschoolmath.net/worksheets/equation_editor.php">
+    http://www.homeschoolmath.net/worksheets/equation_editor.php</a>
+  <br><cite>Mastering Algorithms With C</cite>, Kyle Loudon.&copy;1999,
+  O'Reilly Media & Associates, Inc
+</p>
+  
