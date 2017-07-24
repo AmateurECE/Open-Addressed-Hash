@@ -84,8 +84,8 @@
   <br>Don't forget to use <code>sudo</code> if you do not have administrative
   privileges!</p>
 
-<p>Sources:
-  <cite>CodeCogs Equation Editor</cite>
+<h3>Sources</h3>
+  <br><cite>CodeCogs Equation Editor</cite>
   <a href="http://www.homeschoolmath.net/worksheets/equation_editor.php">
     http://www.homeschoolmath.net/worksheets/equation_editor.php</a>
   <br><cite>Mastering Algorithms With C</cite>, Kyle Loudon.&copy;1999,
