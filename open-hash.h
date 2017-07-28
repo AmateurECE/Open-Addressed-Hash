@@ -34,6 +34,16 @@
  */
 #define ohash_size(tbl) ((tbl)->size)
 
+/**
+ * \brief Returns 1 if the table is full, 0 otherwise.
+ */
+#define ohash_isfull(tbl) ((tbl)->size == (tbl)->positions ? 1 : 0)
+
+/**
+ * \brief Returns 1 if the table is empty, 0 otherwise.
+ */
+#define ohash_isempty(tbl) ((tbl)->size == 0 ? 1 : 0)
+
 /*******************************************************************************
  * TYPE DEFINITIONS
  ***/
