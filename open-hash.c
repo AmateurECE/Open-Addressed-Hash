@@ -15,15 +15,17 @@
  * INCLUDES
  ***/
 
+#include <stdlib.h>
+
 #include "open-hash.h"
 
 /*******************************************************************************
  * STATIC FUNCTION PROTOTYPES
  ***/
 
-static int default_h1(const void *);
-static int default_h2(const void *);
-static int default_match(const void *, const void *);
+static int default_h1(void *);
+static int default_h2(void *);
+static int default_match(void *, void *);
 
 /*******************************************************************************
  * API FUNCTIONS
@@ -35,11 +37,11 @@ static int default_match(const void *, const void *);
  * DESCRIPTION:	    Initializes an ohash_t object and returns a pointer to it.
  *
  * ARGUMENTS:	    positions: (int) -- the size of memory to initialize
- *		    h1: (int (*)(const void *) -- user defined hash function.
+ *		    h1: (int (*)(void *) -- user defined hash function.
  *			See documentation.
- *		    h2: (int (*)(const void *) -- user defined hash function.
+ *		    h2: (int (*)(void *) -- user defined hash function.
  *			See documentation.
- *		    match: (int (*)(const void *, const void *) -- user defined
+ *		    match: (int (*)(void *, void *) -- user defined
  *			function for comparing keys. See documentation.
  *		    destroy: (void (*)(void *) -- user defined function for
  *			releasing allocated memory. See documentation.
@@ -50,9 +52,9 @@ static int default_match(const void *, const void *);
  * NOTES:	    none.
  ***/
 ohash_t * ohash_init(int positions,
-	       int (*h1)(const void *),
-	       int (*h2)(const void *),
-	       int (*match)(const void *, const void *),
+	       int (*h1)(void *),
+	       int (*h2)(void *),
+	       int (*match)(void *, void *),
 	       void (*destroy)(void *)
 	       )
 {
@@ -79,14 +81,14 @@ ohash_t * ohash_init(int positions,
  * DESCRIPTION:	    Inserts an element into the ohash_t struct.
  *
  * ARGUMENTS:	    tbl: (ohash_t *) -- pointer to the struct.
- *		    data: (const void *) -- pointer to the data to insert.
+ *		    data: (void *) -- pointer to the data to insert.
  *
  * RETURN:	    int -- 0 on success, -1 if there was an error, or 1 if the
  *			element already exists in the hash.
  *
  * NOTES:	    none.
  ***/
-int ohash_insert(ohash_t * tbl, const void * data)
+int ohash_insert(ohash_t * tbl, void * data)
 {
 
   if (ohash_isfull(tbl))
@@ -97,8 +99,9 @@ int ohash_insert(ohash_t * tbl, const void * data)
   int i = 0, index = tbl->h1(data) % tbl->positions;
   while (i < tbl->positions - 1 &&
 	 tbl->table[index] != tbl->vacant &&
-	 tbl->table[index] != NULL)
-    int index = (tbl->h1(data) + (i * tbl->h2(k))) % tbl->positions;
+	 tbl->table[index] != NULL) {
+    index = (tbl->h1(data) + (i * tbl->h2(data))) % tbl->positions;
+  }
 
   tbl->table[index] = data;
   return 0;
@@ -121,11 +124,13 @@ int ohash_insert(ohash_t * tbl, const void * data)
 int ohash_remove(ohash_t * tbl, void ** data)
 {
 
-  if (data == NULL)
-    return tbl->table[0];
-  else if (*data == tbl->vacant || *data == NULL)
+  if (data == NULL) {
+    data = tbl->table[0];
+    return 0;
+  } else if (*data == tbl->vacant || *data == NULL) {
     return -1;
-
+  }
+  return 0;
 }
 
 /*******************************************************************************
@@ -145,17 +150,26 @@ int ohash_remove(ohash_t * tbl, void ** data)
 int ohash_lookup(ohash_t * tbl, void ** data)
 {
 
-  if (data == NULL && !ohash_isempty(tbl))) {
-    for (int i = 0; i < tbl->positions; i++)
-      if (tbl->table[i] != NULL && tbl->table[i] != tbl->vacant)
-	return tbl->table[i];
-} else if (*data == tbl->vacant || *data == NULL || ohash_isempty(tbl))
+  if (data == NULL && !ohash_isempty(tbl)) {
+
+    for (int i = 0; i < tbl->positions; i++) {
+      if (tbl->table[i] != NULL && tbl->table[i] != tbl->vacant) {
+	data = tbl->table[i];
+	return 0;
+      }
+    }
+
+  } else if (*data == tbl->vacant || *data == NULL || ohash_isempty(tbl)) {
     return -1;
+  }
 
-  for (int i = 0; i < tbl->positions; i++)
-    if (tbl->match(*data, tbl->table[i]) && tbl->table[i] != NULL)
-      return &tbl->table[i];
-
+  for (int i = 0; i < tbl->positions; i++) {
+    if (tbl->match(*data, tbl->table[i]) && tbl->table[i] != NULL) {
+      data = &tbl->table[i];
+      return 0;
+    }
+  }
+  
   return -1;
 }
 
@@ -207,17 +221,16 @@ int main(int argc, char * argv[])
  * DESCRIPTION:	    The default hashing function, used in the case that
  *		    ohash_init is called with NULL as h1.
  *
- * ARGUMENTS:	    data: (const void *) -- the data to hash.
+ * ARGUMENTS:	    data: (void *) -- the data to hash.
  *
  * RETURN:	    int -- the hashed value of the data, in the form of an int.
  *
  * NOTES:	    none.
  ***/
-static int default_h1(const void * data)
+static int default_h1(void * data)
 {
-
-  int key = (int)data;
-
+  int key = (int)(long)data;
+  return key;
 }
 
 /*******************************************************************************
@@ -226,26 +239,34 @@ static int default_h1(const void * data)
  * DESCRIPTION:	    The default hashing function, used in the case that
  *		    ohash_init is called with NULL as h2.
  *
- * ARGUMENTS:	    data: (const void *) -- the data to hash.
+ * ARGUMENTS:	    data: (void *) -- the data to hash.
  *
  * RETURN:	    int -- the hashed value of the data, in the form of an int.
  *
  * NOTES:	    none.
  ***/
-static int default_h2(const void *);
+static int default_h2(void * data)
+{
+  return 0;
+}
 
 /*******************************************************************************
  * FUNCTION:	    default_match
  *
- * DESCRIPTION:	    The default hashing function, used in the case that
- *		    ohash_init is called with NULL as match.
+ * DESCRIPTION:	    Compares two keys, returning 1 if they're the same, and 0
+ *		    otherwise. The default function.
  *
- * ARGUMENTS:	    data: (const void *) -- the data to hash.
+ * ARGUMENTS:	    d1: (void *) -- a point to compare.
+ *		    d2: (void *) -- a point to compare.
  *
- * RETURN:	    int -- the hashed value of the data, in the form of an int.
+ * RETURN:	    int -- 1 if the data is the same, 0 otherwise.
  *
  * NOTES:	    none.
  ***/
-static int default_match(const void *, const void *);
+static int default_match(void * d1, void * d2)
+{
+  return 0;
+}
+
 
 /******************************************************************************/

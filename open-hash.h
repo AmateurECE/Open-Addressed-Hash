@@ -63,9 +63,9 @@ typedef struct ohash_t {
   int * vacant;
   /* */
 
-  int (*h1)(const void *);
-  int (*h2)(const void *);
-  int (*match)(const void *, const void *);
+  int (*h1)(void *);
+  int (*h2)(void *);
+  int (*match)(void *, void *);
   void (*destroy)(void *);
   
   void ** table;
@@ -90,9 +90,9 @@ typedef struct ohash_t {
  * ohash_destroy.
  */
 ohash_t * ohash_init(int positions,
-	       int (*h1)(const void *),
-	       int (*h2)(const void *),
-	       int (*match)(const void *, const void *),
+	       int (*h1)(void *),
+	       int (*h2)(void *),
+	       int (*match)(void *, void *),
 	       void (*destroy)(void *)
 	       );
 
@@ -103,7 +103,7 @@ ohash_t * ohash_init(int positions,
  * \return int 0 on success, -1 if there was an error, and 1 if the key is
  * already contained within the table.
  */
-int ohash_insert(ohash_t * tbl, const void * data);
+int ohash_insert(ohash_t * tbl, void * data);
 
 /**
  * \brief Removes a key from the hash table, if it exists.
