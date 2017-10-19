@@ -28,7 +28,7 @@
   greatly increasing the number of positions that are probed per collision.
   Below is a table approximating the number of locations probed when a collision
   occurs corresponding to the current load factor of the table.</p>
-<table border="1">
+<table border="1" style="float: left;">
   <tr>
     <th>Load Factor (%)</th>
     <th>Expected Number of Probes</th>
