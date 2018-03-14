@@ -8,7 +8,7 @@
  *
  * CREATED:	    07/22/2017
  *
- * LAST EDITED:	    07/22/2017
+ * LAST EDITED:	    03/14/2018
  ***/
 
 /**
@@ -134,6 +134,13 @@ int ohash_lookup(ohash_t * tbl, void ** data);
  * managing all data associated with the table.
  */
 void ohash_destroy(ohash_t * tbl);
+
+/**
+ * \brief Invokes the callback function on all entries in the hash table.
+ * \param tbl The table to traverse
+ * \param func The callback function
+ */
+extern void ohash_traverse(ohash_t * tbl, void (*func)(void *));
 
 #endif /* __ET_OPEN_HASH_H__ */
 

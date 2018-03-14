@@ -8,8 +8,10 @@
  *
  * CREATED:	    07/22/2017
  *
- * LAST EDITED:	    07/22/2017
+ * LAST EDITED:	    03/14/2018
  ***/
+
+/* TODO: Implement more efficient searching for the hash */
 
 /*******************************************************************************
  * INCLUDES
@@ -196,6 +198,28 @@ void ohash_destroy(ohash_t * tbl)
 
  free_struc:
   free(tbl);
+}
+
+/******************************************************************************
+ * FUNCTION:	    ohash_traverse
+ *
+ * DESCRIPTION:	    Traverse the hash table `tbl' and invoke the callback
+ *		    function `func'.
+ *
+ * ARGUMENTS:	    tbl: (ohash_t *) -- the table to traverse
+ *		    func: (void (*)(void *)) -- the callback function
+ *
+ * RETURN:	    void.
+ *
+ * NOTES:	    none.
+ ***/
+void ohash_traverse(ohash_t * tbl, void (*func)(void *))
+{
+  if (ohash_size(tbl) == 0 || func == NULL)
+    return;
+  int i = 0;
+  for(void * e = tbl->table[i++]; e != NULL; e = tbl->table[i++])
+    func(e);
 }
 
 /*******************************************************************************
