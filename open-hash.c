@@ -1,4 +1,4 @@
-/*******************************************************************************
+/******************************************************************************
  * NAME:	    open-hash.c
  *
  * AUTHOR:	    Ethan D. Twardy
@@ -13,7 +13,7 @@
 
 /* TODO: Implement more efficient searching for the hash */
 
-/*******************************************************************************
+/******************************************************************************
  * INCLUDES
  ***/
 
@@ -21,7 +21,7 @@
 
 #include "open-hash.h"
 
-/*******************************************************************************
+/******************************************************************************
  * STATIC FUNCTION PROTOTYPES
  ***/
 
@@ -29,11 +29,11 @@ static int default_h1(void *);
 static int default_h2(void *);
 static int default_match(void *, void *);
 
-/*******************************************************************************
+/******************************************************************************
  * API FUNCTIONS
  ***/
 
-/*******************************************************************************
+/******************************************************************************
  * FUNCTION:	    ohash_init
  *
  * DESCRIPTION:	    Initializes an ohash_t object and returns a pointer to it.
@@ -48,8 +48,8 @@ static int default_match(void *, void *);
  *		    destroy: (void (*)(void *) -- user defined function for
  *			releasing allocated memory. See documentation.
  *
- * RETURN:	    ohash_t * -- pointer to an initialized ohash struct, or NULL
- *			if there was an error.
+ * RETURN:	    ohash_t * -- pointer to an initialized ohash struct, or
+ *			NULL if there was an error.
  *
  * NOTES:	    none.
  ***/
@@ -77,7 +77,7 @@ ohash_t * ohash_init(int positions,
 
 }
 
-/*******************************************************************************
+/******************************************************************************
  * FUNCTION:	    ohash_insert
  *
  * DESCRIPTION:	    Inserts an element into the ohash_t struct.
@@ -109,7 +109,7 @@ int ohash_insert(ohash_t * tbl, void * data)
   return 0;
 }
 
-/*******************************************************************************
+/******************************************************************************
  * FUNCTION:	    ohash_remove
  *
  * DESCRIPTION:	    Removes an element from the list if it exists, or removes
@@ -135,7 +135,7 @@ int ohash_remove(ohash_t * tbl, void ** data)
   return 0;
 }
 
-/*******************************************************************************
+/******************************************************************************
  * FUNCTION:	    ohash_lookup
  *
  * DESCRIPTION:	    Probes the table for an element. If the data is found,
@@ -175,7 +175,7 @@ int ohash_lookup(ohash_t * tbl, void ** data)
   return -1;
 }
 
-/*******************************************************************************
+/******************************************************************************
  * FUNCTION:	    ohash_destroy
  *
  * DESCRIPTION:	    Removes all elements from a hash table and frees memory
@@ -222,7 +222,7 @@ void ohash_traverse(ohash_t * tbl, void (*func)(void *))
     func(e);
 }
 
-/*******************************************************************************
+/******************************************************************************
  * MAIN
  ***/
 
@@ -235,11 +235,11 @@ int main(int argc, char * argv[])
 }
 #endif /* CONFIG_DEBUG_OPEN_HASH */
 
-/*******************************************************************************
+/******************************************************************************
  * STATIC FUNCTIONS
  ***/
 
-/*******************************************************************************
+/******************************************************************************
  * FUNCTION:	    default_h1
  *
  * DESCRIPTION:	    The default hashing function, used in the case that
@@ -257,7 +257,7 @@ static int default_h1(void * data)
   return key;
 }
 
-/*******************************************************************************
+/******************************************************************************
  * FUNCTION:	    default_h2
  *
  * DESCRIPTION:	    The default hashing function, used in the case that
@@ -274,7 +274,7 @@ static int default_h2(void * data)
   return 0;
 }
 
-/*******************************************************************************
+/******************************************************************************
  * FUNCTION:	    default_match
  *
  * DESCRIPTION:	    Compares two keys, returning 1 if they're the same, and 0
@@ -293,4 +293,4 @@ static int default_match(void * d1, void * d2)
 }
 
 
-/******************************************************************************/
+/*****************************************************************************/

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/******************************************************************************
  * NAME:	    open-hash.h
  *
  * AUTHOR:	    Ethan D. Twardy
@@ -25,7 +25,7 @@
 #ifndef __ET_OPEN_HASH_H__
 #define __ET_OPEN_HASH_H__
 
-/*******************************************************************************
+/******************************************************************************
  * MACRO DEFINITIONS
  ***/
 
@@ -44,7 +44,7 @@
  */
 #define ohash_isempty(tbl) ((tbl)->size == 0 ? 1 : 0)
 
-/*******************************************************************************
+/******************************************************************************
  * TYPE DEFINITIONS
  ***/
 
@@ -72,7 +72,7 @@ typedef struct ohash_t {
 
 } ohash_t;
 
-/*******************************************************************************
+/******************************************************************************
  * API FUNCTION PROTOTYPES
  ***/
 
@@ -83,8 +83,8 @@ typedef struct ohash_t {
  * \param h2 User defined hash function. Refer to mainpage of documentation
  * \param match User defined hash function to compare two keys.
  * \param destroy User defined function to free associated memory.
- * \return ohash_t* Pointer to a newly generated ohash_t object. The user should
- * check that this value is not \c NULL.
+ * \return ohash_t* Pointer to a newly generated ohash_t object. The user
+ * should check that this value is not \c NULL.
  * \warning \c destroy can be set to \c NULL. If this is the case, the memory
  * associated with the hash table is not destroyed when the user calls
  * ohash_destroy.
@@ -144,4 +144,4 @@ extern void ohash_traverse(ohash_t * tbl, void (*func)(void *));
 
 #endif /* __ET_OPEN_HASH_H__ */
 
-/******************************************************************************/
+/*****************************************************************************/
