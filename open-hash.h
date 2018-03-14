@@ -89,7 +89,7 @@ typedef struct ohash_t {
  * associated with the hash table is not destroyed when the user calls
  * ohash_destroy.
  */
-ohash_t * ohash_init(int positions,
+extern ohash_t * ohash_init(int positions,
 	       int (*h1)(void *),
 	       int (*h2)(void *),
 	       int (*match)(void *, void *),
@@ -103,7 +103,7 @@ ohash_t * ohash_init(int positions,
  * \return int 0 on success, -1 if there was an error, and 1 if the key is
  * already contained within the table.
  */
-int ohash_insert(ohash_t * tbl, void * data);
+extern int ohash_insert(ohash_t * tbl, void * data);
 
 /**
  * \brief Removes a key from the hash table, if it exists.
@@ -113,7 +113,7 @@ int ohash_insert(ohash_t * tbl, void * data);
  * \warning if \c data is set to \c NULL, removes the first element from the
  * hash table.
  */
-int ohash_remove(ohash_t * tbl, void ** data);
+extern int ohash_remove(ohash_t * tbl, void ** data);
 
 /**
  * \brief Determines if a value exists within the hash table.
@@ -123,7 +123,7 @@ int ohash_remove(ohash_t * tbl, void ** data);
  * \warning if \c data is set to \c NULL, returns (but does not remove) the
  * first value in the table.
  */
-int ohash_lookup(ohash_t * tbl, void ** data);
+extern int ohash_lookup(ohash_t * tbl, void ** data);
 
 /**
  * \brief Destroys a hash table and all memory associated.
@@ -133,7 +133,7 @@ int ohash_lookup(ohash_t * tbl, void ** data);
  * the table is not freed. If this is the case, the user is responsible for
  * managing all data associated with the table.
  */
-void ohash_destroy(ohash_t * tbl);
+extern void ohash_destroy(ohash_t * tbl);
 
 /**
  * \brief Invokes the callback function on all entries in the hash table.
